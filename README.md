@@ -10,6 +10,15 @@ console.
 composer install baleen/b2tf:dev-master
 ```
 
+Then run `vendor/bin/baleen init`. This will generate a file called `.baleen.yml`
+
+Open that file for editing and add the following lines at the beginning or end:
+
+```yaml
+providers:
+    b2tf: \Baleen\B2tf\BackToTheFutureProvider
+```
+
 ## Usage
 
 You must have at least two migration files:

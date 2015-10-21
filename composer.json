@@ -8,7 +8,12 @@
             "email": "gabriel@somoza.me"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Baleen\\B2tf\\": "src/"
+        }
+    },
     "require": {
         "baleen/cli": "dev-master"
-    }
+    }Ad
 }
