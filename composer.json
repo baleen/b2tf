@@ -1,0 +1,14 @@
+{
+    "name": "baleen/b2tf",
+    "description": "A plugin to commemorate October 21, 2015 - #BackToTheFuture Day",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gabriel Somoza",
+            "email": "gabriel@somoza.me"
+        }
+    ],
+    "require": {
+        "baleen/cli": "dev-master"
+    }
+}
