@@ -24,6 +24,19 @@ providers:
 You must have at least two migration files:
 
 1. One with a timestamp before October 21, 2015
-2. Another one with a timestamp after that date.
+2. Another one with a timestamp after that date. You can create one by running `vendor/bin/baleen create`.
 
-Then just migrate to see the message!  
+Then just migrate (`vendor/bin/baleen migrate`) to see the message!
+  
+## Q&A
+
+#### I don't have any migrations prior to October 21st. How can I test this?
+No worries, easy fix: just take the DeLorean back to the past and choose Baleen CLI as your migrations framework! 
+
+Alternative:  
+ 
+1. Add a new class in your migrations directory. The filename and class-name must coincide, make it something old
+like for example `v19851026090000`. 
+2. Make it implement `Baleen\Migrations\Migration\MigrationInterface`.
+3. You now have a migration in the past. Now create one in the future by running `vendor/bin/baleen create`.
+4. Assuming you also followed the installation instructions above, you're good to go!
