@@ -15,9 +15,11 @@ Then run `vendor/bin/baleen init`. This will generate a file called `.baleen.yml
 Open that file for editing and add the following lines at the beginning or end:
 
 ```yaml
-providers:
-    b2tf: \Baleen\B2tf\BackToTheFutureProvider
+plugins:
+    20151021: \Baleen\B2tf\BackToTheFuturePlugin
 ```
+
+In the VERY odd case you already have a plugin at priority "20151021" then change the number to something else
 
 ## Usage
 

@@ -20,38 +20,32 @@
 namespace Baleen\B2tf;
 
 use Baleen\Cli\BaseCommand;
+use Baleen\Cli\PluginInterface;
 use Baleen\Cli\Provider\Services;
 use Baleen\Migrations\Event\EventInterface;
 use Baleen\Migrations\Event\Timeline\CollectionEvent;
 use Baleen\Migrations\Timeline;
 use Baleen\Migrations\Version;
-use League\Container\ServiceProvider;
+use League\Container\Container;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * Class BackToTheFutureProvider
+ * Class BackToTheFuturePlugin
  *
  * @author Gabriel Somoza <gabriel@strategery.io>
  */
-class BackToTheFutureProvider extends ServiceProvider
+class BackToTheFuturePlugin implements PluginInterface
 {
-    /** @var array  */
-    protected $provides = [Services::APPLICATION_DISPATCHER];
-
     /**
-     * Use the register method to register items with the container via the
-     * protected $this->container property or the `getContainer` method
-     * from the ContainerAwareTrait.
+     * init
      *
-     * @return void
+     * @param Container $container
      */
-    public function register()
+    public function init(Container $container)
     {
-        $container = $this->getContainer();
-        $dispatcher = new EventDispatcher();
+        $dispatcher = $container->get(Services::APPLICATION_DISPATCHER);
         $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
             $command = $event->getCommand();
             if ($command instanceof BaseCommand && $command->getName() == 'timeline:migrate') {
@@ -60,7 +54,6 @@ class BackToTheFutureProvider extends ServiceProvider
                 $this->registerDomainEvent($timeline, $comparator, $event->getOutput());
             }
         });
-        $container->singleton(Services::APPLICATION_DISPATCHER, $dispatcher);
     }
 
     /**
@@ -86,12 +79,12 @@ class BackToTheFutureProvider extends ServiceProvider
                      && $comparator($last, $b2tfVersion) >= 0
                 ) { // we're crossing into the future!
                     $output->writeln([
-                         '<info>+++ You\'re migrating past October 21st 2015 07:28 - #BackToTheFuture Day</info>',
-                         '<info>+++</info>',
-                         '<info>+++</info>    <comment>"If you put your mind to it, you can accomplish anything." - Marty McFly</comment>',
-                         '<info>+++</info>',
-                         '<info>+++ Baleen welcomes you to the future!!</info>',
-                         '',
+                        '<info>+++ You\'re migrating past October 21st 2015 07:28 - #BackToTheFuture Day</info>',
+                        '<info>+++</info>',
+                        '<info>+++</info>    <comment>"If you put your mind to it, you can accomplish anything." - Marty McFly</comment>',
+                        '<info>+++</info>',
+                        '<info>+++ Baleen welcomes you to the future!!</info>',
+                        '',
                     ]);
                 }
             }
